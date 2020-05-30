@@ -1,28 +1,64 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <app-header></app-header>
+    <app-add-todo @addTodo="addTodo"></app-add-todo>
+    <app-todos :todos="todos" @delTodo="deleteTodo"></app-todos>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header';
+import Todos from './components/Todos';
+import AddTodo from './components/AddTodo';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    appHeader: Header,
+    appTodos: Todos,
+    appAddTodo: AddTodo
+  },
+  data() {
+    return {
+      todos: [
+        {
+          id: 1,
+          title: 'Todo One',
+          completed: false
+        },
+        {
+          id: 2,
+          title: 'Todo Two',
+          completed: false
+        },
+        {
+          id: 3,
+          title: 'Todo Three',
+          completed: false
+        }
+      ]
+    }
+  },
+  methods: {
+    addTodo(newTodo) {
+      this.todos = [...this.todos, newTodo];
+    },
+    deleteTodo(id) {
+      this.todos = this.todos.filter(todo => todo.id !== id);
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.4;
+  }
 </style>
